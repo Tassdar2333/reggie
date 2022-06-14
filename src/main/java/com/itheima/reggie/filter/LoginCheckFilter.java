@@ -9,7 +9,6 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -37,8 +36,10 @@ public class LoginCheckFilter implements Filter {
 
         //1.获取本次请求的URI
         String requestURI = request.getRequestURI();
-        //定义不需要处理的请求路径
 
+        log.info("拦截到的请求：{}",requestURI);
+
+        //定义不需要处理的请求路径
         String[] urls = new String[]{
           "/employee/login",
           "/employee/logout",
@@ -51,12 +52,14 @@ public class LoginCheckFilter implements Filter {
 
         //3.如果不需要处理，则直接放行
         if(check){
+            log.info("本次请求{}不需要处理",requestURI);
             filterChain.doFilter(request,response);
             return;
         }
 
         //4.判断登录状态，如果登录，则放行
         if (request.getSession().getAttribute("employee") != null) {
+            log.info("用户已经登录，用户id为：{}",request.getSession().getAttribute("employee"));
             filterChain.doFilter(request,response);
             return;
         }

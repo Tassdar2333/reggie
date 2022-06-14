@@ -48,6 +48,7 @@
         console.log('---/backend/page/login/login.html---')
         localStorage.removeItem('userInfo')
         window.top.location.href = '/backend/page/login/login.html'
+        alert("未登录")
       } else {
         return res.data
       }
