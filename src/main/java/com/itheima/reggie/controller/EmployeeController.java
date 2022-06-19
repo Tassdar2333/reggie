@@ -5,7 +5,6 @@ import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,9 +51,9 @@ public class EmployeeController {
      * @return
      */
     @PostMapping
-    @Transactional
     public R<String> save(HttpServletRequest request,@RequestBody Employee employee){
         log.info("新增员工，员工信息{}",employee.toString());
+
         //设置初始密码
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
         Long uid = (Long) request.getSession().getAttribute("employee");
@@ -64,13 +63,10 @@ public class EmployeeController {
         employee.setCreateUser(uid);
         employee.setUpdateUser(uid);
 
-        try {
-            employeeService.save(employee);
-            return R.success("新增员工成功");
-        }catch (Exception e){
-            e.printStackTrace();
-            return R.error("新增员工失败");
-        }
+
+        employeeService.save(employee);
+        return R.success("新增员工成功");
+
 
     }
 
