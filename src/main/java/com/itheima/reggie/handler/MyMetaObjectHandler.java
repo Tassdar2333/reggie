@@ -7,10 +7,12 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+/**
+ * MyBatis-plus自动填充配置
+ */
 @Slf4j
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
-
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");

@@ -20,6 +20,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public R<String> exceptionHandler(SQLIntegrityConstraintViolationException ex){
+
         log.error(ex.getMessage());
 
         String error = ex.getMessage();
