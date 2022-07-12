@@ -100,6 +100,42 @@ public class EmployeeController {
 
     }
 
+    /**
+     * 根据id来修改员工信息
+     * @param employee
+     * @return
+     */
+    @PutMapping
+    public R<String> update(HttpServletRequest request,@RequestBody Employee employee){
+
+        Long empId = (Long)request.getSession().getAttribute("employee");
+
+        log.info(employee.toString());
+
+        employee.setUpdateTime(LocalDateTime.now());
+
+        employee.setUpdateUser(empId);
+
+        employeeService.updateById(employee);
+
+        return R.success("员工信息修改成功");
+
+    }
+
+    @GetMapping("/{id}")
+    public R<Employee> getById(@PathVariable("id") Long id){
+
+        log.info("根据id查询员工信息");
+
+        Employee employee = employeeService.getById(id);
+
+        if(employee != null){
+            return R.success(employee);
+        }
+
+        return R.error("未查询到该员工");
+    }
+
 
 
     @Autowired
