@@ -12,7 +12,6 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 
 /**
  * @version 1.0
@@ -23,7 +22,6 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
-
     private EmployeeService employeeService;
 
     /**
@@ -34,8 +32,11 @@ public class EmployeeController {
      */
     @PostMapping("/login")
     public R<Employee> login(HttpServletRequest request,@RequestBody Employee employee){
+
         R<Employee> result = employeeService.login(employee);
+
         request.getSession().setAttribute("employee",result.getData().getId());
+
         return result;
     }
 
@@ -52,17 +53,17 @@ public class EmployeeController {
      */
     @PostMapping
     public R<String> save(HttpServletRequest request,@RequestBody Employee employee){
+
         log.info("新增员工，员工信息{}",employee.toString());
 
         //设置初始密码
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-        Long uid = (Long) request.getSession().getAttribute("employee");
 
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setCreateUser(uid);
-        employee.setUpdateUser(uid);
-
+//        Long uid = (Long) request.getSession().getAttribute("employee");
+//
+//        employee.setCreateUser(uid);
+//
+//        employee.setUpdateUser(uid);
 
         employeeService.save(employee);
         return R.success("新增员工成功");
@@ -82,7 +83,7 @@ public class EmployeeController {
         log.info("page = {},pageSize = {},name={}",page,pageSize,name);
 
         //构建分页构造器
-        Page pageInfo = new Page(page,pageSize);
+        Page<Employee> pageInfo = new Page<>(page,pageSize);
 
         //构造条件构造器
         LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper();
@@ -108,13 +109,11 @@ public class EmployeeController {
     @PutMapping
     public R<String> update(HttpServletRequest request,@RequestBody Employee employee){
 
-        Long empId = (Long)request.getSession().getAttribute("employee");
-
-        log.info(employee.toString());
-
-        employee.setUpdateTime(LocalDateTime.now());
-
-        employee.setUpdateUser(empId);
+//        Long empId = (Long)request.getSession().getAttribute("employee");
+//
+//        log.info(employee.toString());
+//
+//        employee.setUpdateUser(empId);
 
         employeeService.updateById(employee);
 
