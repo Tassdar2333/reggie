@@ -19,3 +19,6 @@ mybatis-plus:
     db-config:
       id-type: ASSIGN_ID
   mapper-locations: 
+
+reggie:
+  path: D:\development_enviroment\picture\reggie\
