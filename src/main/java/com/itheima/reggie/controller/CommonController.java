@@ -34,21 +34,16 @@ public class CommonController {
         log.info("文件上传");
 
         String originFileName = file.getOriginalFilename();
-
         //后缀
         String suffix = originFileName.substring(originFileName.lastIndexOf("."));
-
         //构建新文件名
         String fileName = UUID.randomUUID().toString() + suffix;
-
         //使用uuid重新生成文件名
         File dir = new File(basePath);
 
         //判断当前目录是否存在
         if(!dir.exists()){
-
             dir.mkdirs();
-
         }
 
         try {

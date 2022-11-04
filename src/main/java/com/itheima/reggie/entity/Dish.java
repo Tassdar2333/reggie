@@ -1,8 +1,6 @@
 package com.itheima.reggie.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -65,26 +63,31 @@ public class Dish implements Serializable {
     /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     /**
      * 创建人
      */
+    @TableField(fill = FieldFill.INSERT)
     private Long createUser;
 
     /**
      * 修改人
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDeleted;
 
     @TableField(exist = false)
